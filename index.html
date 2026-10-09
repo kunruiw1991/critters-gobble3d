@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>🌀🍭🌳🏰👑</title>
+  <link rel="icon" type="image/jpeg" href="icons/dogday.jpg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="gobbleApp">
+    <!-- Fullscreen 3D Three.js WebGL Toy Island Viewport -->
+    <canvas id="webglCanvas"></canvas>
+
+    <!-- Fullscreen Visceral Size-Up, Gobble & Bonk Flash Overlays (100% Zero Text) -->
+    <div id="impactFlashOverlay" class="impact-flash-overlay"></div>
+    <div id="impactBadgeBurst" class="impact-badge-burst hidden">👑</div>
+
+    <!-- Floating Touch/Mouse Virtual Joystick Ring (100% Zero Text) -->
+    <div id="joystickBase" class="joystick-base hidden">
+      <div id="joystickKnob" class="joystick-knob">🧭</div>
+    </div>
+
+    <!-- Top Floating 3D Size-Tier Progress, Live Rank & Timer HUD (100% Zero Text) -->
+    <header class="island-topbar">
+      <!-- Active Critter Avatar & Current Size Tier Badge -->
+      <div class="critter-chip" id="hudCritterChip">
+        <img id="hudDriverImg" src="icons/dogday.jpg" alt="" />
+        <span id="hudTierBadge" class="tier-badge">🌱</span>
+      </div>
+
+      <!-- 5-Critter Live Size & Tier Evolution Gauge -->
+      <div class="size-progress-shell">
+        <div class="size-progress-rail">
+          <div id="sizeProgressFill" class="size-progress-fill"></div>
+          <!-- Size Tier Gate Milestones -->
+          <span id="tierGate1" class="tier-gate gate-1">🌳</span>
+          <span id="tierGate2" class="tier-gate gate-2">🏡</span>
+          <span id="tierGate3" class="tier-gate gate-3">🏰</span>
+          <span class="tier-finish-crown">👑</span>
+
+          <!-- 4 Rival Size Markers -->
+          <div id="rivalMarker0" class="gobbler-marker rival-marker">
+            <img id="rivalMarkerImg0" src="icons/catnap.jpg" alt="" />
+          </div>
+          <div id="rivalMarker1" class="gobbler-marker rival-marker">
+            <img id="rivalMarkerImg1" src="icons/craftycorn.jpg" alt="" />
+          </div>
+          <div id="rivalMarker2" class="gobbler-marker rival-marker">
+            <img id="rivalMarkerImg2" src="icons/hoppy.jpg" alt="" />
+          </div>
+          <div id="rivalMarker3" class="gobbler-marker rival-marker">
+            <img id="rivalMarkerImg3" src="icons/picky.jpg" alt="" />
+          </div>
+
+          <!-- Player Size Marker -->
+          <div id="playerMarker" class="gobbler-marker player-marker">
+            <img id="playerMarkerImg" src="icons/dogday.jpg" alt="" />
+            <span class="marker-crown">🌀</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual Sun-Clock Ring + Live Rank Medal + 3 Star Trophies + Replay + Sound -->
+      <div class="top-right-cluster">
+        <!-- Circular Rainbow Countdown Ring -->
+        <div class="clock-ring-chip" id="clockRingChip">
+          <svg class="clock-svg" viewBox="0 0 48 48">
+            <circle class="clock-bg" cx="24" cy="24" r="20"></circle>
+            <circle id="clockArc" class="clock-arc" cx="24" cy="24" r="20"></circle>
+          </svg>
+          <span id="clockEmoji" class="clock-emoji">⏳</span>
+        </div>
+
+        <div id="hudRankChip" class="hud-rank-chip rank-1">
+          <span id="hudRankEmoji">🥇</span>
+        </div>
+
+        <div class="star-trophy-row">
+          <div id="hudStar0" class="star-medal earned">⭐</div>
+          <div id="hudStar1" class="star-medal earned">⭐</div>
+          <div id="hudStar2" class="star-medal earned">⭐</div>
+        </div>
+
+        <button id="btnRestartIsland" class="glass-icon-btn" aria-label="Replay">🔁</button>
+        <button id="btnSoundToggle" class="glass-icon-btn" aria-label="Sound">🔊</button>
+      </div>
+    </header>
+
+    <!-- Left Floating Vertical 8-Critter Toy Island Selector (100% Zero Text) -->
+    <aside id="worldSelectorRail" class="world-selector-rail"></aside>
+
+    <!-- Center Floating Visual Toast & Animated Finger Guide (100% Zero Text) -->
+    <div id="islandToast" class="island-toast hidden">👑🌈✨</div>
+    <div id="steerGuide" class="steer-guide">👆 🌀 🍭 🌳 🏰</div>
+
+    <!-- Bottom Arcade 3D Gobbler D-Pad & Power Pedals (100% Zero Text) -->
+    <footer class="arcade-cockpit">
+      <!-- Bottom-Left: 4-Way Quick Steer D-Pad -->
+      <div class="pedal-cluster left-pedals">
+        <button id="btnDirLeft" class="arcade-pedal dir-pedal" aria-label="Left">⬅️</button>
+        <div class="dir-vert-stack">
+          <button id="btnDirUp" class="arcade-pedal dir-pedal" aria-label="Up">⬆️</button>
+          <button id="btnDirDown" class="arcade-pedal dir-pedal" aria-label="Down">⬇️</button>
+        </div>
+        <button id="btnDirRight" class="arcade-pedal dir-pedal" aria-label="Right">➡️</button>
+      </div>
+
+      <!-- Bottom-Right: 3D Vortex Power Pedals -->
+      <div class="pedal-cluster right-pedals">
+        <button id="btnPowerMagnet" class="arcade-pedal power-magnet" aria-label="Vortex">🌪️</button>
+        <button id="btnPowerDash" class="arcade-pedal power-dash" aria-label="Dash">⚡</button>
+        <button id="btnPowerQuake" class="arcade-pedal power-quake" aria-label="Quake">💥</button>
+      </div>
+    </footer>
+
+    <!-- 100% Zero-Text 3D Podium Ranking & Win/Lose Celebration Modal -->
+    <div id="winModal" class="podium-backdrop hidden" role="dialog" aria-modal="true">
+      <div id="winPodiumCard" class="podium-card">
+        <div id="winSparklesHeader" class="podium-sparkles">👑 🏆 🌈 🏆 👑</div>
+        <div class="podium-hero">
+          <img id="winDriverImg" src="icons/dogday.jpg" alt="" />
+          <span id="winCupBadge" class="podium-cup-badge">☀️</span>
+          <span id="winMedalBadge" class="podium-medal-badge">🥇</span>
+        </div>
+        <div class="podium-stars" id="winStarsRow">
+          <div class="podium-star earned">⭐</div>
+          <div class="podium-star earned">⭐</div>
+          <div class="podium-star earned">⭐</div>
+        </div>
+        <!-- 5-Critter Full Finishing Size Order Standings -->
+        <div id="podiumStandingsRow" class="podium-standings-row"></div>
+        <div class="podium-actions">
+          <button id="btnWinReplay" class="podium-btn replay">🔁</button>
+          <button id="btnWinNext" class="podium-btn next">▶️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 100% Zero-Text All-8 Toy Islands Grand Champion Modal -->
+    <div id="finaleModal" class="podium-backdrop hidden" role="dialog" aria-modal="true">
+      <div class="podium-card finale-card">
+        <div class="podium-sparkles">🌈 🏆 🌀 👑 🌀 🏆 🌈</div>
+        <div id="finaleGrid" class="finale-grid"></div>
+        <div class="podium-actions">
+          <button id="btnFinaleClose" class="podium-btn next">🎉</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
